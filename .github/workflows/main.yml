@@ -1,32 +1,27 @@
-name: job concurrency: 
+name: job concurrency
 
 on:
- push:
-  branches: [main]
-
-  jobs:
-   build:
-    run-on: ubuntu-latest
+  push:
+    branches:
+      - main
 
 concurrency:
- group: deploy
- cancel-in-progress: true
+  group: deploy
+  cancel-in-progress: true
 
- steps: 
-  - name: checkout reopositroy 
-  
-    uses: actions/checkout@v6.0.2 
-  
-  - name: install dependencies
-  
-    run: npm install 
-    
-  - name: build next.js app
-  
-    run: npm run build
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    -name: deploy app
-    run: echo "deploy app"
-     
-    
-   
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Deploy app
+        run: echo "deploy app"
