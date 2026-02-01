@@ -1,4 +1,4 @@
-name: Next.js CI/CD
+name: job concurrency
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 concurrency:
-  group: main-deploy
+  group: deploy
   cancel-in-progress: true
 
 jobs:
@@ -14,28 +14,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Use Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
+        working-directory: ./my-next-app
 
-      # Step 4: Build Next.js app
       - name: Build Next.js app
         run: npm run build
+        working-directory: ./my-next-app
 
-      # Step 5: (Optional) Deploy app
       - name: Deploy app
-        run: echo "Deploy step placeholder - connect to Vercel or Netlify here"
-
-      # Step 6: Debug (optional)
-      - name: List project files
-        run: ls -la
+        run: echo "Deploy placeholder - connect Vercel or Netlify"
